@@ -32,9 +32,9 @@ public class KakaoPlaceService {
         this.enabled = StringUtils.hasText(restApiKey);
         this.restClient = enabled
                 ? RestClient.builder()
-                .baseUrl(BASE_URL)
-                .defaultHeader(HttpHeaders.AUTHORIZATION, "KakaoAK " + restApiKey)
-                .build()
+                        .baseUrl(BASE_URL)
+                        .defaultHeader(HttpHeaders.AUTHORIZATION, "KakaoAK " + restApiKey)
+                        .build()
                 : null;
         if (!enabled) {
             log.warn("kakao.rest-api-key 가 설정되지 않아 장소 검색을 건너뜁니다.");
@@ -59,8 +59,8 @@ public class KakaoPlaceService {
                     .retrieve()
                     .body(KakaoSearchResponse.class);
 
-            List<PlaceDto> places = kakaoResponse == null ? List.of() :
-                    kakaoResponse.documents().stream()
+            List<PlaceDto> places = kakaoResponse == null ? List.of()
+                    : kakaoResponse.documents().stream()
                             .map(doc -> new PlaceDto(
                                     doc.placeName,
                                     doc.addressName,
@@ -68,8 +68,7 @@ public class KakaoPlaceService {
                                     parseDistance(doc.distance),
                                     doc.y,
                                     doc.x,
-                                    doc.placeUrl
-                            ))
+                                    doc.placeUrl))
                             .sorted(Comparator.comparingInt(PlaceDto::distanceMeters))
                             .toList();
 
@@ -93,8 +92,7 @@ public class KakaoPlaceService {
     }
 
     private record KakaoSearchResponse(
-            List<KakaoPlaceDocument> documents
-    ) {
+            List<KakaoPlaceDocument> documents) {
     }
 
     private record KakaoPlaceDocument(
@@ -104,7 +102,6 @@ public class KakaoPlaceService {
             double x,
             double y,
             String distance,
-            @JsonProperty("place_url") String placeUrl
-    ) {
+            @JsonProperty("place_url") String placeUrl) {
     }
 }
