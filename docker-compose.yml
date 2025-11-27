@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+    lunch-api:
+        build: .
+        container_name: any_idea_for_lunch
+        ports:
+            - "8080:8080"
+        restart: unless-stopped
