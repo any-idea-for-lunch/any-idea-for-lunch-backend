@@ -275,16 +275,30 @@ async function showStores(menuName, options = {}) {
         } else {
             places.forEach((place, idx) => {
                 const li = document.createElement("li");
+                li.classList.add("store-row");
                 li.innerHTML = `
-          <strong>${idx + 1}. ${place.name}</strong><br/>
-          <span>${place.roadAddress || place.address || "주소 정보 없음"}</span>
-          ${
-              isValidDistance(place.distanceMeters)
-                  ? ` · ${place.distanceMeters}m`
-                  : ""
-          }
+          <div class="store-info">
+            <strong>${idx + 1}. ${place.name}</strong><br/>
+            <span>${place.roadAddress || place.address || "주소 정보 없음"}</span>
+            ${
+                isValidDistance(place.distanceMeters)
+                    ? ` · ${place.distanceMeters}m`
+                    : ""
+            }
+          </div>
+          <button class="share-btn" aria-label="${place.name} 공유">
+            <i class="fa-solid fa-share-nodes"></i>
+          </button>
         `;
                 li.onclick = () => panTo(place.lat, place.lng);
+                const shareBtn = li.querySelector(".share-btn");
+                if (shareBtn) {
+                    shareBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        sharePlace(place);
+                    };
+                }
+
                 list.appendChild(li);
             });
         }
@@ -416,6 +430,95 @@ function drawMap(places, coords) {
 
     if (!bounds.isEmpty()) {
         state.map.setBounds(bounds);
+    }
+}
+
+let kakaoShareScriptPromise = null;
+function ensureKakaoShareSdk() {
+    if (window.Kakao && window.Kakao.isInitialized && window.Kakao.isInitialized()) {
+        return Promise.resolve();
+    }
+    if (!kakaoKey) {
+        return Promise.reject(new Error("카카오 JS 키가 없어 공유를 사용할 수 없습니다."));
+    }
+    if (!kakaoShareScriptPromise) {
+        kakaoShareScriptPromise = new Promise((resolve, reject) => {
+            const script = document.createElement("script");
+            script.src = "https://developers.kakao.com/sdk/js/kakao.js";
+            script.onload = () => {
+                try {
+                    if (!window.Kakao.isInitialized()) {
+                        window.Kakao.init(kakaoKey);
+                    }
+                    resolve();
+                } catch (e) {
+                    reject(e);
+                }
+            };
+            script.onerror = () =>
+                reject(new Error("카카오 공유 스크립트를 불러오지 못했습니다."));
+            document.head.appendChild(script);
+        });
+    }
+    return kakaoShareScriptPromise;
+}
+
+async function sharePlace(place) {
+    const fallbackImage =
+        "https://k.kakaocdn.net/dn/bGv5X0/btsCixWGk2x/9kLmFJt3KJhqBw0FYI3HKK/img_640x640.jpg";
+    try {
+        await ensureKakaoShareSdk();
+        // 가게 URL이 있으면 그대로 사용, 없으면 주소/좌표 기반 카카오맵 링크 생성
+        const shareUrl = place.url
+            ? place.url
+            : place.roadAddress
+            ? `https://map.kakao.com/link/search/${encodeURIComponent(
+                  place.roadAddress
+              )}`
+            : place.address
+            ? `https://map.kakao.com/link/search/${encodeURIComponent(
+                  place.address
+              )}`
+            : `https://map.kakao.com/link/map/${encodeURIComponent(
+                  place.name
+              )},${place.lat},${place.lng}`;
+        const desc = place.roadAddress || place.address || "주변 음식점";
+        let imageUrl = fallbackImage;
+        if (place.lat && place.lng) {
+            const url = new URL(
+                `/api/static-map?lat=${place.lat}&lng=${place.lng}&name=${encodeURIComponent(
+                    place.name
+                )}`,
+                window.location.origin
+            );
+            imageUrl = url.toString();
+        }
+
+        window.Kakao.Share.sendDefault({
+            objectType: "feed",
+            content: {
+                title: place.name,
+                description: desc,
+                imageUrl,
+                imageWidth: 640,
+                imageHeight: 360,
+                link: {
+                    mobileWebUrl: shareUrl,
+                    webUrl: shareUrl,
+                },
+            },
+            buttons: [
+                {
+                    title: "지도에서 보기",
+                    link: {
+                        mobileWebUrl: shareUrl,
+                        webUrl: shareUrl,
+                    },
+                },
+            ],
+        });
+    } catch (err) {
+        alert(err.message || "공유 기능을 사용할 수 없습니다.");
     }
 }
 

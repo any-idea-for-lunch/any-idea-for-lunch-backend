@@ -153,6 +153,39 @@ body {
     white-space: nowrap;
 }
 
+.store-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.store-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.share-btn {
+    border: 1px solid #273552;
+    background: #fff;
+    color: #273552;
+    border-radius: 6px;
+    padding: 6px 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.share-btn:hover {
+    background: #f0f3ff;
+    transform: translateY(-1px);
+}
+
 .hidden {
     opacity: 0;
     transform: translateY(40px);
