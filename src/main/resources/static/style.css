@@ -223,6 +223,19 @@ body {
     border: 1px solid #273552;
 }
 
+.re-search-buttons > .btn-share {
+    width: 125px;
+    border: 1px solid #273552;
+}
+
+.re-search-buttons > .btn-share .emoji {
+    margin-right: 6px;
+}
+
+.re-search-buttons > .btn-share .text {
+    margin-left: 10px;
+}
+
 .re-search-buttons > .btn-current {
     width: 140px;
     border: 1px solid #273552;

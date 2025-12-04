@@ -224,11 +224,13 @@ async function showStores(menuName, options = {}) {
 
     state.lastMenuName = menuName;
     const isFirstOpen = !state.mapVisible;
-
-    if (!silent && isFirstOpen) {
-        title.innerHTML = `
+    const headerHtml = `
   ${menuName} 주변 가게
   <span class="re-search-buttons">
+    <span class="btn-share">
+      <span class="emoji"><i class="fa-solid fa-share-nodes"></i></span>
+      <span class="text"> 해당 목록 공유</span>
+    </span>
     <span class="btn-map">
       <span class="emoji"><i class="fa-solid fa-location-dot"></i></span>
       <span class="text"> 지도 상 위치에서 재검색</span>
@@ -239,26 +241,16 @@ async function showStores(menuName, options = {}) {
     </span>
   </span>
 `;
+
+    if (!silent && isFirstOpen) {
+        title.innerHTML = headerHtml;
         bindReSearchButtons(menuName);
         list.innerHTML = `<li>내 위치를 확인하는 중...</li>`;
         section.style.display = "block";
         revealSection(section);
     } else {
         if (!silent) {
-            title.querySelector(".re-search-buttons") ||
-                (title.innerHTML = `
-  ${menuName} 주변 가게
-  <span class="re-search-buttons">
-    <span class="btn-map">
-      <span class="emoji"><i class="fa-solid fa-location-dot"></i></span>
-      <span class="text"> 지도 상 위치에서 재검색</span>
-    </span>
-    <span class="btn-current">
-      <span class="emoji"><i class="fa-solid fa-arrows-rotate"></i></span>
-      <span class="text"> 현재 위치에서 재검색</span>
-    </span>
-  </span>
-`);
+            title.innerHTML = headerHtml;
             bindReSearchButtons(menuName);
         }
         section.style.display = "block";
