@@ -126,6 +126,7 @@ const grid = document.getElementById("mandalGrid");
 const section = document.getElementById("mapStoreSection");
 const title = document.getElementById("selectedMenuTitle");
 const list = document.getElementById("storeList");
+const locationStatus = document.getElementById("locationStatus");
 
 const state = {
     depth: 0,
@@ -137,7 +138,33 @@ const state = {
     loadingCounts: {},
     lastMenuName: null,
     mapVisible: false,
+    geoErrorMessage: null,
 };
+
+function renderLocationStatus() {
+    if (!locationStatus) return;
+    if (state.geoErrorMessage) {
+        locationStatus.textContent = state.geoErrorMessage;
+        locationStatus.classList.add("show");
+    } else {
+        locationStatus.textContent = "";
+        locationStatus.classList.remove("show");
+    }
+}
+
+function formatGeoError(err) {
+    if (!err) return "알 수 없는 오류";
+    switch (err.code) {
+        case err.PERMISSION_DENIED:
+            return "위치 권한이 거부됐습니다";
+        case err.POSITION_UNAVAILABLE:
+            return "위치 정보를 받을 수 없습니다";
+        case err.TIMEOUT:
+            return "위치 응답이 지연됐습니다";
+        default:
+            return err.message || "알 수 없는 오류";
+    }
+}
 
 function renderTiles() {
     grid.innerHTML = "";
@@ -271,7 +298,9 @@ async function showStores(menuName, options = {}) {
                 li.innerHTML = `
           <div class="store-info">
             <strong>${idx + 1}. ${place.name}</strong><br/>
-            <span>${place.roadAddress || place.address || "주소 정보 없음"}</span>
+            <span>${
+                place.roadAddress || place.address || "주소 정보 없음"
+            }</span>
             ${
                 isValidDistance(place.distanceMeters)
                     ? ` · ${place.distanceMeters}m`
@@ -326,14 +355,27 @@ async function showStores(menuName, options = {}) {
 
 function getCurrentPosition({ forceNavigator = false } = {}) {
     if (!forceNavigator && state.currentCoords) {
+        if (state.geoErrorMessage) {
+            renderLocationStatus();
+        }
         return Promise.resolve(state.currentCoords);
     }
 
     const fallback = { lat: 37.5665, lng: 126.978 }; // 서울 시청
 
-    if (!navigator.geolocation) {
+    const useFallback = (message) => {
         state.currentCoords = fallback;
-        return Promise.resolve(state.currentCoords);
+        state.geoErrorMessage = message;
+        renderLocationStatus();
+        return state.currentCoords;
+    };
+
+    if (!navigator.geolocation) {
+        return Promise.resolve(
+            useFallback(
+                "이 브라우저에서 위치 정보를 사용할 수 없어 서울 시청 기준으로 보여드려요."
+            )
+        );
     }
 
     return new Promise((resolve) => {
@@ -343,11 +385,14 @@ function getCurrentPosition({ forceNavigator = false } = {}) {
                     lat: pos.coords.latitude,
                     lng: pos.coords.longitude,
                 };
+                state.geoErrorMessage = null;
+                renderLocationStatus();
                 resolve(state.currentCoords);
             },
-            () => {
-                state.currentCoords = fallback;
-                resolve(state.currentCoords);
+            (err) => {
+                const reason = formatGeoError(err);
+                const message = `현재 위치를 불러오지 못해 서울 시청 기준으로 대신 보여드려요. (오류: ${reason})`;
+                resolve(useFallback(message));
             },
             { enableHighAccuracy: true, timeout: 5000 }
         );
@@ -427,11 +472,17 @@ function drawMap(places, coords) {
 
 let kakaoShareScriptPromise = null;
 function ensureKakaoShareSdk() {
-    if (window.Kakao && window.Kakao.isInitialized && window.Kakao.isInitialized()) {
+    if (
+        window.Kakao &&
+        window.Kakao.isInitialized &&
+        window.Kakao.isInitialized()
+    ) {
         return Promise.resolve();
     }
     if (!kakaoKey) {
-        return Promise.reject(new Error("카카오 JS 키가 없어 공유를 사용할 수 없습니다."));
+        return Promise.reject(
+            new Error("카카오 JS 키가 없어 공유를 사용할 수 없습니다.")
+        );
     }
     if (!kakaoShareScriptPromise) {
         kakaoShareScriptPromise = new Promise((resolve, reject) => {
@@ -448,7 +499,9 @@ function ensureKakaoShareSdk() {
                 }
             };
             script.onerror = () =>
-                reject(new Error("카카오 공유 스크립트를 불러오지 못했습니다."));
+                reject(
+                    new Error("카카오 공유 스크립트를 불러오지 못했습니다.")
+                );
             document.head.appendChild(script);
         });
     }
@@ -478,9 +531,9 @@ async function sharePlace(place) {
         let imageUrl = fallbackImage;
         if (place.lat && place.lng) {
             const url = new URL(
-                `/api/static-map?lat=${place.lat}&lng=${place.lng}&name=${encodeURIComponent(
-                    place.name
-                )}`,
+                `/api/static-map?lat=${place.lat}&lng=${
+                    place.lng
+                }&name=${encodeURIComponent(place.name)}`,
                 window.location.origin
             );
             imageUrl = url.toString();
