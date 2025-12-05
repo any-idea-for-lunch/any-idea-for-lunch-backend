@@ -394,7 +394,7 @@ function getCurrentPosition({ forceNavigator = false } = {}) {
                 const message = `현재 위치를 불러오지 못해 서울 시청 기준으로 대신 보여드려요. (오류: ${reason})`;
                 resolve(useFallback(message));
             },
-            { enableHighAccuracy: true, timeout: 5000 }
+            { enableHighAccuracy: true, timeout: 7500 }
         );
     });
 }

@@ -1,12 +1,19 @@
-# 오늘 점심 뭐먹지?
+# 오늘 점심 뭐 먹지?
 
 -- 스프링부트 빌드&런
 <br />
-./gradlew bootRun
-<br />
-./gradlew clean --refresh-dependencies bootRun
-<br />
-<br />
+
+-   빌드&런
+    <br />
+    ./gradlew bootRun
+    <br />
+    <br />
+-   캐시 초기화빌드&런
+    <br />
+    ./gradlew clean --refresh-dependencies bootRun
+    <br />
+    <br />
+
 -- 도커 빌드&런
 <br />
 
