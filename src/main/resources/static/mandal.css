@@ -1,0 +1,268 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #f2f4f7;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+.menu-card {
+  margin-bottom: 16px;
+  border-radius: 12px;
+  background-color: #fff;
+}
+
+.menu-recommend-title {
+  margin-top: 1px;
+  margin-bottom: 6px;
+  font-weight: bold;
+  font-size: 17px;
+}
+
+.coll_tit {
+  min-height: 27px;
+  padding: 18px 0 9px;
+}
+
+.mandal-container {
+  height: 400px;
+  background: #e5e5e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mandal-grid {
+  width: 360px;
+  height: 360px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.tile {
+  background: #ffffff;
+  border: 1px solid #273552;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #1a1a1c;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+  text-align: center;
+  user-select: none;
+}
+
+.tile:hover {
+  transform: scale(1.05);
+  background: rgba(239, 239, 243, 0.884);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.tile.center {
+  background: #fee500;
+  font-weight: 700;
+}
+
+.tile .main {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.sub-text {
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.small-text {
+  font-size: 11px;
+  font-weight: 400;
+  color: #666;
+  display: block; /* 줄 바꿈 유지 */
+  margin-top: 4px;
+  white-space: nowrap;
+}
+
+.map-store-section.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 내용 스타일 */
+.map-store-section {
+  margin-bottom: 16px;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12);
+}
+
+.map {
+  height: 350px;
+  background: #e5e5e5;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.store-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.store-list li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  font-size: 15px;
+}
+
+.hidden {
+  opacity: 0;
+  transform: translateY(40px);
+  pointer-events: none;
+  display: none;
+}
+
+.show {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  pointer-events: auto;
+}
+
+/* 타이틀 영역 */
+#selectedMenuTitle {
+  float: left;
+  margin-top: 1px;
+  margin-bottom: 6px;
+  margin-left: 24px;
+  font-weight: bold;
+  font-size: 17px;
+}
+
+/* 버튼 컨테이너 */
+.re-search-buttons {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 12px;
+}
+
+.re-search-buttons > .btn-share {
+  width: 105px; /* 지도 상 위치 버튼 너비 */
+  border: 1px solid #273552;
+}
+
+.re-search-buttons .btn-share i {
+  margin-right: 8px; /* 아이콘과 텍스트 사이 간격 */
+}
+
+.re-search-buttons > .btn-map {
+  width: 155px; /* 지도 상 위치 버튼 너비 */
+  border: 1px solid #273552;
+}
+
+.re-search-buttons .btn-map i {
+  margin-right: 6px; /* 아이콘과 텍스트 사이 간격 */
+}
+
+.re-search-buttons > .btn-current {
+  width: 140px; /* 현재 위치 버튼 너비 */
+  border: 1px solid #273552;
+}
+
+.re-search-buttons .btn-current i {
+  margin-right: 6px; /* 아이콘과 텍스트 사이 간격 */
+}
+
+.re-search-buttons > span {
+  display: inline-flex;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 20px;
+  cursor: pointer;
+  padding: 6px 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 24px;
+  justify-content: flex-start;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.re-search-buttons .emoji {
+  flex-shrink: 0;
+  font-size: 18px;
+  margin-right: 8px;
+  width: 15px;
+  text-align: center;
+}
+
+.re-search-buttons .text {
+  opacity: 1; /* 항상 보이게 */
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+}
+
+.re-search-buttons > span:hover {
+  background: #f0f0f0;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.store-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background: #fff;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  font-size: 15px;
+}
+
+.store-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.store-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.share-btn {
+  border: 1px solid #273552;
+  background: #fff;
+  color: #273552;
+  border-radius: 6px;
+  padding: 6px 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.share-btn:hover {
+  background: #f0f3ff;
+  transform: translateY(-1px);
+}

@@ -1,0 +1,207 @@
+.adLinkColl .list_ad .c-item-ad {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.adLinkColl .list_ad > li {
+  position: relative;
+}
+.adLinkColl .list_ad > li .wrap_thumb:hover ~ .wrap_multi {
+  display: block;
+  width: auto;
+}
+.adLinkColl .list_ad > li .wrap_multi:hover {
+  display: block;
+  width: auto;
+}
+.adLinkColl .wrap_cont {
+  position: relative;
+  width: 100%;
+}
+.adLinkColl .wrap_multi {
+  display: none;
+  overflow: hidden;
+  position: absolute;
+  z-index: 15;
+  top: -44px;
+  left: 72px;
+  width: 0;
+  transition: width 1s;
+  background-color: #fff;
+  box-shadow: 0px 4px 32px 0px rgba(0, 0, 0, 0.16);
+  box-shadow: 0px 4px 32px 0px var(--colorB1);
+  border-radius: 12px;
+}
+.adLinkColl .wrap_multi .list_item {
+  overflow: hidden;
+  padding: 16px;
+}
+.adLinkColl .wrap_multi .list_item li {
+  float: left;
+  margin: 0;
+  padding-left: 10px;
+}
+.adLinkColl .wrap_multi .list_item li:first-child {
+  padding-left: 0;
+}
+.adLinkColl .wrap_multi .tit_item {
+  display: block;
+  padding-top: 10px;
+  font-size: 1.4rem;
+  line-height: 1.2142857143;
+  text-align: center;
+  font-weight: normal;
+}
+.adLinkColl .info_tit {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  line-height: 22px;
+  margin-bottom: 3px;
+}
+.adLinkColl .info_tit > * {
+  float: left;
+}
+.adLinkColl .info_tit::after {
+  display: block;
+  height: 0;
+  font-size: 0;
+  visibility: hidden;
+  clear: both;
+  content: ".";
+}
+.adLinkColl .desc {
+  margin-top: 5px;
+}
+.adLinkColl .desc a {
+  text-decoration: none;
+  color: #333;
+}
+.adLinkColl .info_tit + .desc {
+  margin-top: 3px;
+}
+.adLinkColl .item-contents .tit_sub {
+  display: block;
+  margin-top: 4px;
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+.adLinkColl .item-contents .tit_sub::before {
+  content: "";
+  float: left;
+  margin: 1px 8px 0 0;
+  width: 2px;
+  height: 16px;
+  background-color: var(--colorB1);
+}
+.adLinkColl .item-contents .txt_head {
+  font-weight: bold;
+  color: var(--baseSite);
+}
+.adLinkColl .info_direct {
+  overflow: hidden;
+  margin-top: 3px;
+  clear: both;
+}
+.adLinkColl .info_direct a {
+  float: left;
+  color: #4b5aaf;
+}
+.adLinkColl .wrap_pay {
+  position: relative;
+  margin-left: 8px;
+  cursor: pointer;
+}
+.adLinkColl .wrap_pay:hover .box_tooltip {
+  display: block;
+}
+.adLinkColl .txt_medical::before {
+  content: "";
+  display: inline-block;
+  margin: 3px 5px 0 2px;
+  vertical-align: top;
+  width: 1px;
+  height: 14px;
+  background-color: var(--colorB1);
+}
+.adLinkColl .wrap_button {
+  padding-left: 16px;
+}
+.adLinkColl .btn_opt {
+  overflow: hidden;
+  display: block;
+  height: 32px;
+  min-width: 62px;
+  padding: 3px 7px 3px 4px;
+  line-height: 24px;
+  border: 1px solid var(--colorB2);
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 14px;
+  color: var(--fcSub);
+  white-space: nowrap;
+}
+.adLinkColl .btn_opt:hover {
+  text-decoration: none;
+}
+.adLinkColl .btn_opt.btn_calc::before {
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: url(//search1.daumcdn.net/search/statics/common/pm/ico_adLinkColl_241010.svg)
+    no-repeat -25px 0;
+  filter: var(--iconInvert);
+  vertical-align: top;
+  opacity: 0.9;
+}
+.adLinkColl .btn_opt .ico-g.ico_kakao {
+  margin: 4px 3px 0 6px;
+  width: 14px;
+  opacity: 0.9;
+}
+.adLinkColl .btn_opt .ico_chplus {
+  width: 18px;
+  margin: 3px 4px 0 3px;
+}
+.adLinkColl li:hover .btn_opt {
+  background-position-x: -55px;
+}
+.adLinkColl .info_kakaopay {
+  display: flex;
+  padding: 16px 20px;
+  padding: 16px var(--mgSpace);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-top: 1px solid var(--colorB3);
+  background-color: #fffef8;
+  align-items: center;
+}
+.adLinkColl .info_kakaopay .txt_subinfo {
+  font-size: 1.4rem;
+  line-height: 1.4285714286;
+  margin-left: 10px;
+}
+.adLinkColl .badge_pay {
+  position: relative;
+  padding-left: 33px;
+  margin: 0;
+  border-color: #ffe500;
+  font-size: 9px;
+  line-height: 1.9;
+  text-indent: 1px;
+}
+.adLinkColl .badge_pay .ico-pmp {
+  width: 28px;
+  height: 10px;
+  background-position: -52px 0;
+  filter: var(--iconInvert, none);
+  position: absolute;
+  top: 4px;
+  left: 5px;
+}
+.adLinkColl {
+  font-size: 12px;
+}
+.adLinkColl .wrap_thumb .thumb_bf img {
+  width: 100%;
+}

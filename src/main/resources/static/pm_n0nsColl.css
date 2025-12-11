@@ -1,0 +1,302 @@
+#n0nsColl .c-list-basic {
+  display: grid;
+  grid-gap: 0 10px;
+  padding: var(--mgSpace);
+  grid-template-columns: repeat(2, 1fr);
+  border-top: 1px solid var(--colorB3);
+}
+#n0nsColl .c-list-basic:has(+ .q_expand) {
+  padding-bottom: 0;
+}
+#n0nsColl .c-list-basic > li {
+  margin: var(--mgSpace) 0 0;
+}
+#n0nsColl .c-list-basic > li:nth-child(n + 2) {
+  border-top: 0 none;
+}
+#n0nsColl .c-list-basic > li:nth-child(-n + 2) {
+  margin-top: 0;
+}
+#n0nsColl .c-list-basic .c-item-content {
+  padding: 0;
+}
+#n0nsColl .c-list-basic .item-bundle-mid {
+  margin-top: 10px;
+}
+.pc #n0nsColl .c-list-basic {
+  background-color: #fffef8;
+  border-radius: 0 0 12px 12px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.pc #n0nsColl .c-list-basic li {
+  width: calc((100% - 30px) / 4);
+}
+.pc #n0nsColl .c-list-basic li:nth-child(-n + 4) {
+  margin-top: 0;
+}
+.pc #n0nsColl .c-list-basic .wrap_cont:hover .item-title .tit-g {
+  text-decoration: underline;
+}
+#n0nsColl .c-list-basic .item-thumb {
+  float: none;
+  margin-left: 0;
+}
+#n0nsColl .c-list-basic .item-thumb .wrap_thumb .thumb_bf::after {
+  background-color: rgba(7, 49, 99, 0.02);
+}
+#n0nsColl .c-list-basic .item-thumb img {
+  height: auto;
+  width: 100%;
+}
+#n0nsColl .c-list-basic .item-thumb .badge_purchase {
+  display: inline-block;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 100px;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 20px;
+  color: #fff;
+  vertical-align: top;
+  background-color: #ff4e33;
+}
+#n0nsColl .c-list-basic .item-thumb .ty_tl {
+  top: 8px;
+  left: 8px;
+}
+#n0nsColl .wrap_cont:hover {
+  text-decoration: none;
+}
+#n0nsColl .tit-g.clamp-g {
+  line-height: 1.375;
+  max-height: 2.75em;
+}
+#n0nsColl .txt_promotion {
+  display: inline-block;
+  margin-bottom: 2px;
+  font-size: 1.4rem;
+  line-height: 1.4285714286;
+  color: #ff4e33;
+}
+#n0nsColl .txt_promotion + .item-title {
+  margin-top: 2px;
+}
+#n0nsColl .cont_price {
+  margin-top: 4px;
+  line-height: 1.375;
+}
+#n0nsColl .txt_price {
+  margin-right: 4px;
+  font-size: 1.6rem;
+  font-weight: bold;
+  line-height: 1.375;
+  color: var(--fcB1);
+}
+#n0nsColl .txt_price .txt_won {
+  font-size: 1.4rem;
+  font-weight: normal;
+  line-height: 1.4285714286;
+}
+#n0nsColl .txt_low {
+  margin-right: 4px;
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1.4285714286;
+  color: #ff4e33;
+}
+#n0nsColl .txt_regular {
+  display: block;
+  font-size: 1.4rem;
+  line-height: 1.2142857143;
+  color: var(--fcOpt);
+  text-decoration: line-through;
+}
+#n0nsColl .txt_discount {
+  margin-right: 2px;
+  font-size: 1.6rem;
+  font-weight: bold;
+  line-height: 1.375;
+  color: #ff4e33;
+}
+#n0nsColl .cont_delivery {
+  margin-top: 4px;
+  font-size: 1.4rem;
+  line-height: 1.4285714286;
+}
+#n0nsColl .cont_delivery .ico_nship {
+  overflow: hidden;
+  display: inline-block;
+  margin-top: 3px;
+  font-size: 1px;
+  line-height: 0;
+  color: transparent;
+  text-shadow: none;
+  width: 52px;
+  height: 15px;
+  background: url("https://search1.daumcdn.net/search/statics/common/pm/coll/ico_nship_250314.svg")
+    0 0 no-repeat;
+  vertical-align: top;
+}
+#n0nsColl .cont_info {
+  overflow: hidden;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+  line-height: 2rem;
+}
+#n0nsColl .cont_info .txt_mallname {
+  overflow: hidden;
+  max-width: calc(100% - 111px);
+  font-size: 1.4rem;
+  line-height: 1.4285714286;
+  max-height: 1.4286em;
+  color: var(--fcSub);
+}
+#n0nsColl
+  .cont_info:not(:has(.ico_npay)):not(:has(.ico_official)):not(
+    :has(.ico_certified)
+  )
+  .txt_mallname {
+  width: 100%;
+  max-width: none;
+}
+#n0nsColl
+  .cont_info:has(.ico_official):not(:has(.ico_npay)):not(:has(.ico_certified))
+  .txt_mallname,
+#n0nsColl
+  .cont_info:has(.ico_certified):not(:has(.ico_npay)):not(:has(.ico_official))
+  .txt_mallname {
+  max-width: calc(100% - 31px);
+}
+#n0nsColl
+  .cont_info:has(.ico_npay):not(:has(.ico_official)):not(:has(.ico_certified))
+  .txt_mallname {
+  max-width: calc(100% - 49px);
+}
+#n0nsColl
+  .cont_info:has(.ico_official):has(.ico_certified):not(:has(.ico_npay))
+  .txt_mallname {
+  max-width: calc(100% - 62px);
+}
+#n0nsColl
+  .cont_info:has(.ico_npay):has(.ico_official):not(:has(.ico_certified))
+  .txt_mallname,
+#n0nsColl
+  .cont_info:has(.ico_npay):has(.ico_certified):not(:has(.ico_official))
+  .txt_mallname {
+  max-width: calc(100% - 80px);
+}
+#n0nsColl .cont_info .ico_official {
+  overflow: hidden;
+  display: inline-block;
+  font-size: 1px;
+  line-height: 0;
+  color: transparent;
+  text-shadow: none;
+  vertical-align: top;
+  width: 27px;
+  height: 16px;
+  background: url("https://search1.daumcdn.net/search/statics/common/pm/coll/ico_official.svg")
+    0 0 no-repeat;
+}
+#n0nsColl .cont_info .ico_certified {
+  overflow: hidden;
+  display: inline-block;
+  font-size: 1px;
+  line-height: 0;
+  color: transparent;
+  text-shadow: none;
+  vertical-align: top;
+  width: 27px;
+  height: 16px;
+  background: url("https://search1.daumcdn.net/search/statics/common/pm/coll/ico_certified.svg")
+    0 0 no-repeat;
+}
+#n0nsColl .cont_count {
+  margin-top: 2px;
+  font-size: 1.4rem;
+  line-height: 1.4285714286;
+}
+#n0nsColl .cont_count .txt_info {
+  display: inline-block;
+  line-height: 1.4285714286;
+  font-size: 1.4rem;
+  color: var(--fcB3);
+}
+#n0nsColl .gem-star-point + .txt_info::before {
+  content: "";
+  display: inline-block;
+  width: 1px;
+  height: 12px;
+  margin: -1px 6px;
+  background-color: var(--colorB1);
+}
+#n0nsColl .ico_npay {
+  display: inline-block;
+  overflow: hidden;
+  margin-top: -1px;
+  font-size: 1px;
+  line-height: 0;
+  color: transparent;
+  text-shadow: none;
+  vertical-align: top;
+  width: 36px;
+  height: 13px;
+  background: url("https://search1.daumcdn.net/search/statics/common/pm/coll/ico_npay_250314_v2.svg")
+    0 0 no-repeat;
+}
+#n0nsColl .ico_npay.ico_plus {
+  width: 45px;
+  background: url("https://search1.daumcdn.net/search/statics/common/pm/coll/ico_npayPlus_250314_v2.svg")
+    0 0 no-repeat;
+}
+#n0nsColl .txt_delivery {
+  display: inline-block;
+  font-size: 1.4rem;
+  line-height: 1.4285714286;
+  color: var(--fcOpt);
+  word-wrap: break-word;
+  white-space: normal;
+}
+#n0nsColl .txt_delivery::before {
+  content: "";
+  display: inline-block;
+  vertical-align: -1px;
+  margin: 5px 2px 0 0;
+  width: 19px;
+  height: 12px;
+  background: url("https://search1.daumcdn.net/search/statics/common/pm/coll/ico_delivery.svg")
+    0 0 no-repeat;
+}
+.pc #n0nsColl .txt_delivery::before {
+  margin-top: 4px;
+}
+#n0nsColl .txt_setup {
+  display: block;
+  margin-top: 4px;
+  font-size: 1.4rem;
+  color: var(--fcOpt);
+}
+#n0nsColl .txt_setup .btn_info::before {
+  content: " ";
+}
+#n0nsColl .txt_setup i.i-info {
+  width: 10px;
+  height: 10px;
+  line-height: 10px;
+  font-size: 10px;
+  border-color: var(--fcOpt);
+  color: var(--fcOpt);
+  vertical-align: 1.5px;
+}
+.pc #n0nsColl .btn_expand {
+  background-color: #fffef8;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
