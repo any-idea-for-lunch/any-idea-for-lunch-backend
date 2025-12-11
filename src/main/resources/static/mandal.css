@@ -56,12 +56,25 @@ body {
   transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
   text-align: center;
   user-select: none;
+  will-change: transform, opacity;
 }
 
 .tile:hover {
   transform: scale(1.05);
   background: rgba(239, 239, 243, 0.884);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+
+.tile.animate {
+    opacity: 0;
+    transform: scale(0.94) translateY(8px);
+    animation: tile-pop-in 0.32s ease forwards;
+    animation-delay: var(--delay, 0s);
+}
+
+.tile.center.animate {
+    animation-delay: 0s;
 }
 
 .tile.center {
@@ -81,6 +94,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  white-space: nowrap;
   gap: 4px;
 }
 
@@ -101,18 +115,38 @@ body {
 /* 내용 스타일 */
 .map-store-section {
   margin-bottom: 16px;
-  border-radius: 12px;
+  border-radius: 8px;
   background-color: #fff;
-  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  display: none; /* 처음엔 숨김 */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1.5s ease, transform 1.5s ease;
 }
 
+.location-status {
+    display: none;
+    margin: 8px 0 12px;
+    padding: 10px 12px;
+    background: #fff7e6;
+    border: 1px solid #f1c89c;
+    color: #8a5a1f;
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.location-status.show {
+    display: block;
+}
 .map {
   height: 350px;
-  background: #e5e5e5;
+  background: #e0e0e0;
   padding: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
+  ont-weight: 700;
   margin: 0 auto;
 }
 
@@ -126,6 +160,39 @@ body {
   padding: 10px;
   border-bottom: 1px solid #ddd;
   font-size: 15px;
+  white-space: nowrap;
+}
+.store-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.store-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.share-btn {
+    border: 1px solid #273552;
+    background: #fff;
+    color: #273552;
+    border-radius: 6px;
+    padding: 6px 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.share-btn:hover {
+    background: #f0f3ff;
+    transform: translateY(-1px);
 }
 
 .hidden {
@@ -139,6 +206,10 @@ body {
   opacity: 1;
   transform: translateY(0);
   transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.map-store-header h3 {
+    margin: 0;
   pointer-events: auto;
 }
 
@@ -149,7 +220,11 @@ body {
   margin-bottom: 6px;
   margin-left: 24px;
   font-weight: bold;
-  font-size: 17px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 /* 버튼 컨테이너 */
@@ -160,11 +235,22 @@ body {
   margin-left: 12px;
 }
 
+.re-search-buttons > .btn-map {
+    width: 155px;
+    border: 1px solid #273552;
+}
+
 .re-search-buttons > .btn-share {
-  width: 105px; /* 지도 상 위치 버튼 너비 */
+  width: 125px; /* 지도 상 위치 버튼 너비 */
   border: 1px solid #273552;
 }
 
+.re-search-buttons > .btn-share .emoji {
+    margin-right: 6px;
+  }
+.re-search-buttons > .btn-share .text {
+    margin-left: 10px;
+}
 .re-search-buttons .btn-share i {
   margin-right: 8px; /* 아이콘과 텍스트 사이 간격 */
 }
@@ -265,4 +351,15 @@ body {
 .share-btn:hover {
   background: #f0f3ff;
   transform: translateY(-1px);
+}
+
+@keyframes tile-pop-in {
+    from {
+        opacity: 0;
+        transform: scale(0.94) translateY(8px);
+        }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
