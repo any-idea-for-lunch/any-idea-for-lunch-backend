@@ -529,14 +529,18 @@
                 </div>
               </div>
               <!-- 🗺 지도 + 주변 가게 목록 -->
-              <div class="map-store-section hidden" id="mapStoreSection">
-                <div class="coll_tit">
-                  <h3 id="selectedMenuTitle"></h3>
+              <div class="map-store-section" id="mapStoreSection">
+                  <div class="coll_tit map-store-header">
+                    <h3 id="selectedMenuTitle"></h3>
+                  </div>
+                  <div
+                    class="location-status"
+                    id="locationStatus"
+                    aria-live="polite"
+                  ></div>
+                  <div class="map" id="map">지도 영역</div>
+                  <ul class="store-list" id="storeList"></ul>
                 </div>
-                <div class="map" id="map">지도 영역</div>
-
-                <ul class="store-list" id="storeList"></ul>
-              </div>
               <div disp-attr="IIM" class="g_comp">
                 <div id="imageColl">
                   <div class="c-header">
