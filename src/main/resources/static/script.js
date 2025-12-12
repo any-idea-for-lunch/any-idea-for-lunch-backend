@@ -330,8 +330,17 @@ async function showStores(menuName, options = {}) {
         renderTiles();
 
         if (kakaoKey) {
-            await ensureKakaoMap();
-            drawMap(places, coords);
+            try {
+                await ensureKakaoMap();
+                drawMap(places, coords);
+            } catch (mapErr) {
+                console.error("지도 렌더링 실패", mapErr);
+                const mapNode = document.getElementById("map");
+                if (mapNode) {
+                    mapNode.textContent =
+                        "지도를 표시하지 못했지만 목록은 확인할 수 있어요.";
+                }
+            }
         } else {
             document.getElementById("map").textContent =
                 "카카오 JS 키가 없어 지도를 표시할 수 없습니다.";
@@ -415,18 +424,54 @@ async function fetchPlaces(keyword, coords) {
 }
 
 function ensureKakaoMap() {
-    if (window.kakao && window.kakao.maps) return Promise.resolve();
+    const isReady =
+        window.kakao &&
+        window.kakao.maps &&
+        typeof window.kakao.maps.LatLng === "function" &&
+        typeof window.kakao.maps.Map === "function";
+    if (isReady) return Promise.resolve();
 
-    return new Promise((resolve, reject) => {
-        const script = document.createElement("script");
-        script.src = `https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${encodeURIComponent(
-            kakaoKey
-        )}&libraries=services`;
-        script.onload = () => kakao.maps.load(resolve);
-        script.onerror = () =>
-            reject(new Error("카카오 지도 스크립트를 불러오지 못했습니다."));
-        document.head.appendChild(script);
-    });
+    if (!window.__kakaoMapScriptPromise) {
+        window.__kakaoMapScriptPromise = new Promise((resolve, reject) => {
+            const script = document.createElement("script");
+            script.src = `https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${encodeURIComponent(
+                kakaoKey
+            )}&libraries=services`;
+            script.onload = () => {
+                if (window.kakao?.maps?.load) {
+                    window.kakao.maps.load(() => {
+                        if (
+                            typeof window.kakao.maps.LatLng === "function" &&
+                            typeof window.kakao.maps.Map === "function"
+                        ) {
+                            resolve();
+                        } else {
+                            window.__kakaoMapScriptPromise = null;
+                            reject(
+                                new Error(
+                                    "카카오 지도 SDK가 올바르게 로드되지 않았습니다."
+                                )
+                            );
+                        }
+                    });
+                } else {
+                    window.__kakaoMapScriptPromise = null;
+                    reject(
+                        new Error("카카오 지도 객체를 불러오지 못했습니다.")
+                    );
+                }
+            };
+            script.onerror = () => {
+                window.__kakaoMapScriptPromise = null;
+                reject(
+                    new Error("카카오 지도 스크립트를 불러오지 못했습니다.")
+                );
+            };
+            document.head.appendChild(script);
+        });
+    }
+
+    return window.__kakaoMapScriptPromise;
 }
 
 function drawMap(places, coords) {
