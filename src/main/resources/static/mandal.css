@@ -288,7 +288,7 @@ body {
 
 .re-search-buttons .emoji {
   flex-shrink: 0;
-  font-size: 18px;
+  font-size: 14px;
   margin-right: 8px;
   width: 15px;
   text-align: center;
@@ -296,7 +296,7 @@ body {
 
 .re-search-buttons .text {
   opacity: 1; /* 항상 보이게 */
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   color: #333;
 }
