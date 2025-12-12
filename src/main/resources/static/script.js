@@ -358,7 +358,8 @@ async function showStores(menuName, options = {}) {
 
     if (!silent && isFirstOpen) {
         state.mapVisible = true;
-        section.scrollIntoView({ behavior: "smooth" });
+        const top = section.getBoundingClientRect().top + window.scrollY - 180;
+        window.scrollTo({ top, behavior: "smooth" });
     }
 }
 
