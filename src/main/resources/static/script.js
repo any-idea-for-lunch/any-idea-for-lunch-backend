@@ -356,11 +356,15 @@ async function showStores(menuName, options = {}) {
         renderTiles();
     }
 
-    if (!silent && isFirstOpen) {
-        state.mapVisible = true;
+    if (!silent) {
+        if (isFirstOpen) {
+            state.mapVisible = true;     // 최초 1번만 실행됨
+        }
+    
         const top = section.getBoundingClientRect().top + window.scrollY - 180;
         window.scrollTo({ top, behavior: "smooth" });
     }
+    
 }
 
 function getCurrentPosition({ forceNavigator = false } = {}) {
