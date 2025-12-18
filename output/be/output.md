@@ -1,9 +1,9 @@
-###  백엔드 API 요약
+#  백엔드 API 요약
 - Base URL: `http://localhost:8080`
 - 인증: 없음 (내부 사용 가정)
 - `kakao.rest-api-key` 미설정 시 장소 검색 응답은 빈 목록을 반환
 
-### 1. 주변 음식점 검색 (`POST /api/places`)
+## 1. 주변 음식점 검색 (`POST /api/places`)
 - 설명: 위도/경도와 키워드를 받아 반경 2km 내 음식점을 거리순으로 조회
 - Request Body (application/json)
   - `keyword` (string): 검색 키워드 (예: "돈까스")
@@ -24,7 +24,7 @@
   - 반경 2km, 최대 15건 조회 후 `distanceMeters` 오름차순 정렬
   - 요청/응답 오류가 나도 200 + 빈 배열 반환(서버 로그에만 오류 기록)
 
-### 2. 카카오 지도 링크 반환 (`GET /api/map-link`)
+## 2. 카카오 지도 링크 반환 (`GET /api/map-link`)
 - 설명: 좌표를 받아 카카오 지도 웹 링크와 검색 링크를 반환
 - Query Parameters
   - `lat` (number): 위도
@@ -34,7 +34,7 @@
   - `searchUrl` (string): 동일 명칭(위치)으로 검색하는 링크
 - 동작 상세: 고정 명칭 "위치"를 UTF-8로 인코딩해 `map.kakao.com` 링크 구성
 
-### 3. 뷰 렌더링 (`GET /`)
+## 3. 뷰 렌더링 (`GET /`)
 - 설명: `index.html` 템플릿을 렌더링하여 프론트엔드 페이지 제공 (API 아님)
 
 ## 설정
