@@ -1,51 +1,69 @@
-기술 스택 (Tech Stack)
-Language: Java 17
-Framework: Spring Boot 3.5.8
-Frontend Engine: HTML/CSS/JS
+## Frontend 원본 리포지토리
+https://github.com/any-idea-for-lunch/any-idea-for-lunch-frontend
 
-## 사전 요구 사항
-Java JDK 17이상 (필수)
+본 리포지토리는 순수 HTML / CSS / JavaScript 기반으로 작성된 프론트엔드 코드입니다. 프레임워크(React, Vue 등)는 사용하지 않았으며, 브라우저 환경에서 바로 동작하는 구조를 목표로 합니다.
 
-<설치>
-이 프로젝트는 별도의 프론트엔드 빌드 도구 없이, Java와 Spring Boot만으로 실행되는 통합형 서비스입니다.
+## 기술 스택 (Tech Stack)
+- HTML5
+- CSS3
+- JavaScript
+- Live Server (로컬 개발용)
 
-<실행>
-터미널(또는 CMD)에서 아래 명령어를 입력하세요.
+FE 개발 단계에서는 Node.js, npm, 프론트엔드 프레임워크를 사용하지 않았습니다. 브라우저에서 바로 실행 가능한 구조로 구현하여, 백엔드와의 통합을 고려한 정적 FE 개발을 진행했습니다.
 
-# 1. 저장소 복제
-git clone https://github.com/any-idea-for-lunch/any-idea-for-lunch-backend.git
-cd any-idea-for-lunch-backend
+## 실행 방법 (Frontend 단독 실행)
 
-# 2. 서버 실행 (Gradle Wrapper 사용)
-    # Mac / Linux:
-    ./gradlew bootRun
+Frontend 단독 테스트 및 화면 확인은 Live Server를 사용하여 로컬에서 실행합니다.
 
-# Windows:
-    gradlew.bat bootRun
+### <실행 절차>
 
+1. 레포지토리 클론
+git clone https://github.com/any-idea-for-lunch/any-idea-for-lunch-frontend
 
-<구조>
+2. 프로젝트 폴더 열기 (VS Code 권장)
+
+3. index.html 파일 우클릭 → Open with Live Server
+
+4. 브라우저에서 자동 실행
+이 단계에서는 백엔드 API 없이도 화면 흐름 및 UI 동작을 테스트할 수 있습니다.
+
+### <구조>
 ```text
-src/main/
-├── java/com/anyidea/lunch/
-│   ├── controller/          # API 및 페이지 라우팅 컨트롤러
-│   ├── service/             # 추천 로직 및 비즈니스 로직
-│   └── AnyIdeaForLunchApplication.java  # 메인 실행 클래스
-└── resources/
-    ├── templates/           # 프론트엔드 HTML
-    │   └── index.html       # 메인 화면
-    ├── static/              # 정적 자원 (프론트엔드 핵심 파일)
-    │   ├── css/             # 스타일시트
-    │   └── js/              # API 통신 및 화면 로직 (Vanilla JS)
-    └── application.properties # 서버 설정 (포트, DB 등)
+frontend/
+├── index.html # 메인 화면 (메뉴 추천 UI)
+├── script.js # 화면 로직 및 API 통신 (Vanilla JS)
+├── aa.css # 기본 스타일
+├── mandal.css # 만다라트 UI 관련 스타일
+├── 다음 컴포넌트css 
+├── README.md # Frontend 설명 문서
+└── .gitignore
 ```
+- HTML: 화면 구조 정의
 
+- CSS: 레이아웃 및 디자인 구현
+
+- JS: 사용자 이벤트 처리 및 API 통신
 
 ## API 연동 설명
-본 프로젝트는 REST API를 통해 데이터를 주고받으며, 프론트엔드(JavaScript)에서 이를 호출하여 화면을 갱신합니다.
+Frontend 리포지토리에서는 다음을 중심으로 작업했습니다.
 
-1. API 문서 확인 (Swagger)
-서버 실행 후 Swagger UI에 접속하면 사용 가능한 모든 API 엔드포인트와 데이터 형식을 시각적으로 확인할 수 있습니다.
+- 화면 레이아웃 구성
 
-2. 프론트엔드 연동 방식
-src/main/resources/static/js/ 내의 스크립트 파일에서 브라우저 내장 fetch API를 사용하여 백엔드 데이터를 가져옵니다.
+- 사용자 인터랙션 구현
+
+- API 연동을 가정한 목업(mock) 데이터 테스트
+
+이 단계에서는 실제 백엔드 서버와 직접 연결하지 않고, API 응답을 가정한 구조로 JavaScript 코드를 작성했습니다.
+
+### 통합 방식
+- Backend 리포지토리의
+```text
+src/main/resources/templates/
+```
+(Thymeleaf 템플릿 영역) 안에 FE 코드를 수동으로 이동
+
+정적 리소스는
+```text
+src/main/resources/static/
+```
+경로에 배치
