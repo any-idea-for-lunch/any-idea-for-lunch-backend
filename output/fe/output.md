@@ -25,19 +25,20 @@ cd any-idea-for-lunch-backend
 
 
 <구조>
+'''text
 src/main/
 ├── java/com/anyidea/lunch/
 │   ├── controller/          # API 및 페이지 라우팅 컨트롤러
 │   ├── service/             # 추천 로직 및 비즈니스 로직
 │   └── AnyIdeaForLunchApplication.java  # 메인 실행 클래스
 └── resources/
-    ├── templates/           # 프론트엔드 HTML (Thymeleaf)
+    ├── templates/           # 프론트엔드 HTML
     │   └── index.html       # 메인 화면
     ├── static/              # 정적 자원 (프론트엔드 핵심 파일)
     │   ├── css/             # 스타일시트
     │   └── js/              # API 통신 및 화면 로직 (Vanilla JS)
     └── application.properties # 서버 설정 (포트, DB 등)
-
+'''
 
 
 ## API 연동 설명
