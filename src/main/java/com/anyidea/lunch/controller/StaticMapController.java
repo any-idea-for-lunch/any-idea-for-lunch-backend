@@ -1,38 +1,35 @@
 package com.anyidea.lunch.controller;
 
-import com.anyidea.lunch.service.KakaoStaticMapService;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import com.anyidea.lunch.dto.MapLinkResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @RestController
+@Tag(name = "Map Link", description = "카카오 지도 웹 링크를 반환합니다.")
 public class StaticMapController {
 
-    private final KakaoStaticMapService staticMapService;
-
-    public StaticMapController(KakaoStaticMapService staticMapService) {
-        this.staticMapService = staticMapService;
+    @GetMapping("/api/map-link")
+    @Operation(summary = "카카오 지도 링크 반환", description = "정적 이미지 대신 카카오 지도 웹 링크를 반환합니다.")
+    public MapLinkResponse getMapLink(
+            @RequestParam double lat,
+            @RequestParam double lng) {
+        String encodedName = urlEncode("위치");
+        String mapUrl = "https://map.kakao.com/link/map/" + encodedName + "," + lat + "," + lng;
+        String searchUrl = "https://map.kakao.com/link/search/" + encodedName;
+        return new MapLinkResponse(mapUrl, searchUrl);
     }
 
-    @GetMapping(value = "/api/static-map", produces = MediaType.IMAGE_PNG_VALUE)
-    public ResponseEntity<byte[]> getStaticMap(
-            @RequestParam double lat,
-            @RequestParam double lng,
-            @RequestParam(required = false, defaultValue = "") String name) {
-
-        Optional<byte[]> image = staticMapService.fetchStaticMap(lat, lng, name);
-
-        return image
-                .map(bytes -> ResponseEntity
-                        .ok()
-                        .header(HttpHeaders.CACHE_CONTROL, "public, max-age=3600")
-                        .body(bytes))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build());
+    private String urlEncode(String value) {
+        try {
+            return URLEncoder.encode(value, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            return value;
+        }
     }
 }

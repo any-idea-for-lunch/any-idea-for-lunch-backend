@@ -14,7 +14,6 @@ import org.springframework.web.client.RestClientResponseException;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
