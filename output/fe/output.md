@@ -25,7 +25,7 @@ cd any-idea-for-lunch-backend
 
 
 <구조>
-'''text
+```text
 src/main/
 ├── java/com/anyidea/lunch/
 │   ├── controller/          # API 및 페이지 라우팅 컨트롤러
@@ -38,7 +38,7 @@ src/main/
     │   ├── css/             # 스타일시트
     │   └── js/              # API 통신 및 화면 로직 (Vanilla JS)
     └── application.properties # 서버 설정 (포트, DB 등)
-'''
+```
 
 
 ## API 연동 설명
