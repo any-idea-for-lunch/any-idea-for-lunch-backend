@@ -389,23 +389,29 @@ function getCurrentPosition({ forceNavigator = false } = {}) {
     }
 
     return new Promise((resolve) => {
-        navigator.geolocation.getCurrentPosition(
-            (pos) => {
-                state.currentCoords = {
-                    lat: pos.coords.latitude,
-                    lng: pos.coords.longitude,
-                };
-                state.geoErrorMessage = null;
-                renderLocationStatus();
-                resolve(state.currentCoords);
-            },
-            (err) => {
-                const reason = formatGeoError(err);
-                const message = `현재 위치를 불러오지 못해 서울 시청 기준으로 대신 보여드려요. (오류: ${reason})`;
-                resolve(useFallback(message));
-            },
-            { enableHighAccuracy: true, timeout: 7500 }
-        );
+        try {
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    state.currentCoords = {
+                        lat: pos.coords.latitude,
+                        lng: pos.coords.longitude,
+                    };
+                    state.geoErrorMessage = null;
+                    renderLocationStatus();
+                    resolve(state.currentCoords);
+                },
+                (err) => {
+                    const reason = formatGeoError(err);
+                    const message = `현재 위치를 불러오지 못해 서울 시청 기준으로 대신 보여드려요. (오류: ${reason})`;
+                    resolve(useFallback(message));
+                },
+                { enableHighAccuracy: true, timeout: 7500 }
+            );
+        } catch (err) {
+            const reason = formatGeoError(err);
+            const message = `현재 위치 확인 중 문제가 발생해 서울 시청 기준으로 보여드려요. (오류: ${reason})`;
+            resolve(useFallback(message));
+        }
     });
 }
 
@@ -425,12 +431,15 @@ async function fetchPlaces(keyword, coords) {
 }
 
 function ensureKakaoMap() {
-    const isReady =
-        window.kakao &&
-        window.kakao.maps &&
-        typeof window.kakao.maps.LatLng === "function" &&
-        typeof window.kakao.maps.Map === "function";
-    if (isReady) return Promise.resolve();
+    const isConstructor = (fn) =>
+        typeof fn === "function" && !!fn.prototype && !!fn.prototype.constructor;
+    const isMapReady = () =>
+        !!window.kakao &&
+        !!window.kakao.maps &&
+        isConstructor(window.kakao.maps.LatLng) &&
+        isConstructor(window.kakao.maps.Map);
+
+    if (isMapReady()) return Promise.resolve();
 
     if (!window.__kakaoMapScriptPromise) {
         window.__kakaoMapScriptPromise = new Promise((resolve, reject) => {
@@ -441,10 +450,7 @@ function ensureKakaoMap() {
             script.onload = () => {
                 if (window.kakao?.maps?.load) {
                     window.kakao.maps.load(() => {
-                        if (
-                            typeof window.kakao.maps.LatLng === "function" &&
-                            typeof window.kakao.maps.Map === "function"
-                        ) {
+                        if (isMapReady()) {
                             resolve();
                         } else {
                             window.__kakaoMapScriptPromise = null;
@@ -476,6 +482,14 @@ function ensureKakaoMap() {
 }
 
 function drawMap(places, coords) {
+    if (
+        !window.kakao ||
+        !window.kakao.maps ||
+        typeof window.kakao.maps.LatLng !== "function"
+    ) {
+        throw new Error("카카오 지도 객체를 준비하지 못했습니다.");
+    }
+
     const container = document.getElementById("map");
     const center = new kakao.maps.LatLng(coords.lat, coords.lng);
 
