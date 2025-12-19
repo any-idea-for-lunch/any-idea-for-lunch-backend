@@ -20,7 +20,4 @@
 - Swagger API docs: 서버 실행 후 브라우저에서 `http://localhost:8080/swagger-ui.html` 접속
 
 ## 전체 구조도
-(추가 필요)
 
-## 페이지 스크린샷
-(추가 필요)
