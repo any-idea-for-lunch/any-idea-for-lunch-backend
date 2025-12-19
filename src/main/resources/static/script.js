@@ -254,10 +254,6 @@ async function showStores(menuName, options = {}) {
     const headerHtml = `
   ${menuName} 주변 가게
   <span class="re-search-buttons">
-    <span class="btn-share">
-      <span class="emoji"><i class="fa-solid fa-share-nodes"></i></span>
-      <span class="text"> 해당 목록 공유</span>
-    </span>
     <span class="btn-map">
       <span class="emoji"><i class="fa-solid fa-location-dot"></i></span>
       <span class="text"> 지도 상 위치에서 재검색</span>
