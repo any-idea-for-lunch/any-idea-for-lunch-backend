@@ -22,10 +22,6 @@
 > - 조사한 백엔드 구현 방식/API 자료입니다. https://docs.google.com/document/d/1d7ONQULte9nVWK-yw7j4tcDlTYdR-0PR9VpiaRcAotU/edit?usp=sharing
 <br>
 
-사진 1: 다음 검색 결과 컴포넌트로 활용될 것을 기반으로 해 
-사진 2: 만다라트 차트 모형 (사진 출처: https://blog.naver.com/boothebeige/220616450912)
-<br>
-
 ## wbs (일정표)
 일정표는 따로 없었고 강사님께서 처음에 말씀해주신 첫 주차에 주제 선정, 두 번째 주차에 기획서, 세 번째 주차에 FE, 네 번째 주차에 BE 를 진행하는 일정에 맞춰서 수행하기로 팀 내에 안내 및 합의하였다.
 <br>     
